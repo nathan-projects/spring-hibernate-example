@@ -5,10 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import poc.springbootexample.models.Group.Group;
-import poc.springbootexample.models.Group.GroupDao;
-import poc.springbootexample.models.User.User;
-import poc.springbootexample.models.User.UserDao;
+import poc.springbootexample.models.Group.GroupOneMany;
+import poc.springbootexample.models.Group.GroupOneManyDao;
+import poc.springbootexample.models.User.UserOneMany;
+import poc.springbootexample.models.User.UserOneManyDao;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -23,14 +23,14 @@ import java.util.Map;
  */
 
 @Controller
-public class IndexController {
+public class IndexOneManyController {
     //for navigation to different page
 
     @Autowired
-    private UserDao userDao;
+    private UserOneManyDao userOneManyDao;
 
     @Autowired
-    private GroupDao groupDao;
+    private GroupOneManyDao groupOneManyDao;
 
     @RequestMapping("/")
     public ModelAndView home(@RequestParam(value = "msg", required = false) String msg) {
@@ -40,16 +40,16 @@ public class IndexController {
             model.put("msg", msg);
         }
 
-        Iterable<User> users = userDao.findAll();
+        Iterable<UserOneMany> users = userOneManyDao.findAll();
         model.put("users", users);
 
-        Iterable<Group> groups = groupDao.findAll();
+        Iterable<GroupOneMany> groups = groupOneManyDao.findAll();
         model.put("groups", groups);
 
-        return new ModelAndView("home","model",model);
+        return new ModelAndView("homeOneMany","model",model);
     }
 
-    @RequestMapping("/addUser")
+    @RequestMapping("/addUserOneToMany")
     public ModelAndView addUser(@RequestParam(value = "msg", required = false) String msg) {
         Map<String, Object> model = new HashMap<String, Object>();
 
@@ -57,13 +57,13 @@ public class IndexController {
             model.put("msg", msg);
         }
 
-        Iterable<Group> groups = groupDao.findAll();
+        Iterable<GroupOneMany> groups = groupOneManyDao.findAll();
         model.put("groups", groups);
 
-        return new ModelAndView("addUser","model",model);
+        return new ModelAndView("addUserOneToMany","model",model);
     }
 
-    @RequestMapping("/addGroup")
+    @RequestMapping("/addGroupOneToMany")
     public ModelAndView addGroup(@RequestParam(value = "msg", required = false) String msg) {
         Map<String, Object> model = new HashMap<String, Object>();
 
@@ -71,7 +71,7 @@ public class IndexController {
             model.put("msg", msg);
         }
 
-        return new ModelAndView("addGroup", "model", model);
+        return new ModelAndView("addGroupOneToMany", "model", model);
     }
 
     private static Connection getConnection() throws URISyntaxException, SQLException {

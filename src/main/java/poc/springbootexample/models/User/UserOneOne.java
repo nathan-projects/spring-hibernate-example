@@ -1,7 +1,6 @@
 package poc.springbootexample.models.User;
 
 import poc.springbootexample.config.Role;
-import poc.springbootexample.models.Group.Group;
 import poc.springbootexample.models.Group.GroupOneOne;
 
 import javax.persistence.*;

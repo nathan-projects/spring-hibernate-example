@@ -1,7 +1,7 @@
 package poc.springbootexample.models.Group;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import poc.springbootexample.models.User.User;
+import poc.springbootexample.models.User.UserOneMany;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,9 +15,9 @@ import java.util.Set;
 @Table(name = "groups")
 @DiscriminatorColumn(name = "GROUP_TYPE", discriminatorType=DiscriminatorType.STRING)
 @NamedQueries({
-        @NamedQuery(name = "Group.findGroup", query = "SELECT group FROM Group group WHERE group.id = :id")
+        @NamedQuery(name = "GroupOneMany.findGroup", query = "SELECT group FROM GroupOneMany group WHERE group.id = :id")
 })
-public class Group implements Serializable {
+public class GroupOneMany implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,19 +28,19 @@ public class Group implements Serializable {
     private String groupName;
 
     @OneToMany(mappedBy = "group", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<User> users;
+    private Set<UserOneMany> users;
 
     @Column(name = "GROUP_TYPE", insertable = false, updatable = false)
     @JsonIgnore
     private String groupType;
 
-    public Group() {}
+    public GroupOneMany() {}
 
-    public Group(long id) {
+    public GroupOneMany(long id) {
         this.id = id;
     }
 
-    public Group(String groupName) {
+    public GroupOneMany(String groupName) {
        this.groupName = groupName;
     }
 
@@ -60,11 +60,11 @@ public class Group implements Serializable {
         this.groupName = groupName;
     }
 
-    public Set<User> getUsers() {
+    public Set<UserOneMany> getUsers() {
         return users;
     }
 
-    public void setUsers(Set<User> users) {
+    public void setUsers(Set<UserOneMany> users) {
         this.users = users;
     }
 

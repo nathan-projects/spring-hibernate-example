@@ -5,35 +5,35 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import poc.springbootexample.models.Group.AdminGroup;
-import poc.springbootexample.models.Group.Group;
-import poc.springbootexample.models.Group.GroupDao;
+import poc.springbootexample.models.Group.AdminGroupOneMany;
+import poc.springbootexample.models.Group.GroupOneMany;
+import poc.springbootexample.models.Group.GroupOneManyDao;
 
 /**
  * Created by norner on 11/03/2017.
  */
 
 @Controller
-public class GroupController {
+public class GroupOneManyController {
 
     @Autowired
-    private GroupDao groupDao;
+    private GroupOneManyDao groupOneManyDao;
 
 
-    @RequestMapping("/createGroup")
+    @RequestMapping("/createGroupOneToMany")
     @ResponseBody
     public ModelAndView createGroup(String groupName) {
         if (groupName.isEmpty()) {
-            return new ModelAndView("redirect:/addGroup", "msg", "Please enter a group name");
+            return new ModelAndView("redirect:/addGroupOneToMany", "msg", "Please enter a group name");
         }
-        Group group = new AdminGroup(groupName);
+        GroupOneMany groupOneMany = new AdminGroupOneMany(groupName);
         try {
-            groupDao.save(group);
+            groupOneManyDao.save(groupOneMany);
         } catch (Exception ex) {
             String msg = "Failed to add group";
             return new ModelAndView("/","msg",msg);
         }
-        String msg = "Successfully added group: " + group.getGroupName();
+        String msg = "Successfully added group: " + groupOneMany.getGroupName();
         return new ModelAndView("redirect:/","msg",msg);
     }
 
@@ -43,7 +43,7 @@ public class GroupController {
         if (groupId == null) { return new ModelAndView("redirect:/","msg","Please select a group"); }
 
         try {
-            groupDao.delete(groupId);
+            groupOneManyDao.delete(groupId);
         } catch (Exception ex) {
             System.out.println("Exception: " + ex.toString());
             return new ModelAndView("redirect:/","msg","Failed to delete group");

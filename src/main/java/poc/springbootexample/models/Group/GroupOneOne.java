@@ -1,7 +1,6 @@
 package poc.springbootexample.models.Group;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import poc.springbootexample.models.User.User;
 import poc.springbootexample.models.User.UserOneOne;
 
 import javax.persistence.*;

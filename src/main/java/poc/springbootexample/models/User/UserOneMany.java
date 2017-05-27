@@ -1,7 +1,7 @@
 package poc.springbootexample.models.User;
 
 import poc.springbootexample.config.Role;
-import poc.springbootexample.models.Group.Group;
+import poc.springbootexample.models.Group.GroupOneMany;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE) //default single table per class - maps subclasses to base class table
 //can also have joined - table per class/subclass - abstract and concrete classes get their own table
 //can also have TABLE_PER_CLASS - which is a table per concrete class (not abstract)
-public class User implements Serializable {
+public class UserOneMany implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,7 +33,7 @@ public class User implements Serializable {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "GROUP_ID")  //indicates that foreign key is help by group_id (in group class)
-    private Group group;
+    private GroupOneMany group;
 
     @Version
     @Column(name = "version")
@@ -59,13 +59,13 @@ public class User implements Serializable {
     //@ManyToMany
     //@JsonIgnore - what does this do??
 
-    public User() {}
+    public UserOneMany() {}
 
-    public User(long id) {
+    public UserOneMany(long id) {
         this.id = id;
     }
 
-    public User(String email, String name, Role role, Group group) {
+    public UserOneMany(String email, String name, Role role, GroupOneMany group) {
         this.email = email;
         this.name = name;
         this.role = role;
@@ -104,11 +104,11 @@ public class User implements Serializable {
         this.role = role;
     }
 
-    public Group getGroup() {
+    public GroupOneMany getGroup() {
         return group;
     }
 
-    public void setGroup(Group group) {
+    public void setGroup(GroupOneMany group) {
         this.group = group;
     }
 

@@ -8,13 +8,13 @@ import javax.persistence.*;
 
 @Entity
 @DiscriminatorValue(value = "Admin")
-public class AdminGroup extends  Group {
+public class AdminGroupOneMany extends GroupOneMany {
 
     private static final long serialVersionUID = -4791261083735661295L;
 
-    public AdminGroup() {}
+    public AdminGroupOneMany() {}
 
-    public AdminGroup(String groupName) {
+    public AdminGroupOneMany(String groupName) {
         setGroupName(groupName);
     }
 }

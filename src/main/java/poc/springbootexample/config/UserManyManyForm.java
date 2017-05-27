@@ -1,9 +1,5 @@
 package poc.springbootexample.config;
 
-import poc.springbootexample.config.Role;
-import poc.springbootexample.models.Group.Group;
-import poc.springbootexample.models.Group.GroupManyMany;
-
 import java.util.Set;
 
 /**

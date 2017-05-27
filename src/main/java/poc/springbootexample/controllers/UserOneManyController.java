@@ -6,56 +6,56 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import poc.springbootexample.config.Role;
-import poc.springbootexample.models.Group.Group;
-import poc.springbootexample.models.Group.GroupDao;
-import poc.springbootexample.models.User.User;
-import poc.springbootexample.models.User.UserDao;
+import poc.springbootexample.models.Group.GroupOneMany;
+import poc.springbootexample.models.Group.GroupOneManyDao;
+import poc.springbootexample.models.User.UserOneMany;
+import poc.springbootexample.models.User.UserOneManyDao;
 
 /**
  * Created by norner on 11/03/2017.
  */
 
 @Controller
-public class UserController {
+public class UserOneManyController {
 
     @Autowired
-    private UserDao userDao;
+    private UserOneManyDao userOneManyDao;
 
     @Autowired
-    private GroupDao groupDao;
+    private GroupOneManyDao groupOneManyDao;
 
 
-    @RequestMapping("/create")
+    @RequestMapping("/createUserOneToMany")
     @ResponseBody
     public ModelAndView create(String email, String name, Role roleVal, Long groupVal) {
         if (groupVal == null) {
-            return new ModelAndView("redirect:/addUser", "msg", "Please select a group");
+            return new ModelAndView("redirect:/addUserOneToMany", "msg", "Please select a group");
         }
         if (name.isEmpty()) {
-            return new ModelAndView("redirect:/addUser", "msg", "Please enter a name");
+            return new ModelAndView("redirect:/addUserOneToMany", "msg", "Please enter a name");
         }
-        Group foundGroup = groupDao.findOne(groupVal);
-        User user = new User(email, name, roleVal, foundGroup);
+        GroupOneMany foundGroupOneMany = groupOneManyDao.findOne(groupVal);
+        UserOneMany userOneMany = new UserOneMany(email, name, roleVal, foundGroupOneMany);
         try {
-            userDao.save(user);
+            userOneManyDao.save(userOneMany);
         } catch (Exception e) {
             String msg = "Failed to add user";
             return new ModelAndView("/","msg",msg);
         }
-        String msg = "Successfully added user: " + user.getName();
+        String msg = "Successfully added user: " + userOneMany.getName();
         return new ModelAndView("redirect:/","msg",msg);
     }
 
     /**
      * GET /delete  --> Delete the user having the passed id.
      */
-    @RequestMapping("/deleteUser")
+    @RequestMapping("/deleteUserOneToMany")
     @ResponseBody
     public ModelAndView delete(Long userId) {
         if (userId == null) { return new ModelAndView("redirect:/","msg","Please select a user"); }
 
         try {
-            userDao.delete(userId);
+            userOneManyDao.delete(userId);
         } catch (Exception ex) {
             System.out.println("Exception: " + ex.toString());
             return new ModelAndView("redirect:/","msg","Failed to delete user");
@@ -73,8 +73,8 @@ public class UserController {
     public String getByEmail(String email) {
         String userId = "";
         try {
-            User user = userDao.findByEmail(email);
-            userId = String.valueOf(user.getId());
+            UserOneMany userOneMany = userOneManyDao.findByEmail(email);
+            userId = String.valueOf(userOneMany.getId());
         }
         catch (Exception ex) {
             return "User not found";
@@ -90,10 +90,10 @@ public class UserController {
     @ResponseBody
     public String updateUser(long id, String email, String name) {
         try {
-            User user = userDao.findOne(id);
-            user.setEmail(email);
-            user.setName(name);
-            userDao.save(user);
+            UserOneMany userOneMany = userOneManyDao.findOne(id);
+            userOneMany.setEmail(email);
+            userOneMany.setName(name);
+            userOneManyDao.save(userOneMany);
         }
         catch (Exception ex) {
             return "Error updating the user: " + ex.toString();

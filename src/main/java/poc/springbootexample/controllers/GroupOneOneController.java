@@ -13,7 +13,7 @@ import poc.springbootexample.models.Group.GroupOneOneDao;
  */
 
 @Controller
-public class GroupOneToOneController {
+public class GroupOneOneController {
 
     @Autowired
     private GroupOneOneDao groupDao;

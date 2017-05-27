@@ -16,7 +16,7 @@ import poc.springbootexample.models.User.UserOneOneDao;
  */
 
 @Controller
-public class UserOneToOneController {
+public class UserOneOneController {
 
     @Autowired
     private UserOneOneDao userDao;
