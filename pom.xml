@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>poc.springbootexample</groupId>
-	<artifactId>spring-boot-example</artifactId>
+	<artifactId>spring-hibernate-example</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>Spring Boot Proof Of Concept</name>
-	<description>Project involving Spring Boot</description>
+	<name>Spring Hibernate Proof Of Concept</name>
+	<description>Project involving Spring Hibernate</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
